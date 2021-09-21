@@ -33,7 +33,7 @@ class Connection {
   sendUsers() {
     const users = [];
     usersSockets.forEach((value) => users.push(value));
-    this.io.sockets.emit("users", users);
+    this.sockets.emit("users", users);
   }
 
   // Used on new client connection
