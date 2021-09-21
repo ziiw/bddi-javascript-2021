@@ -76,7 +76,6 @@ class Connection {
   disconnect() {
     usersSockets.delete(this.socket);
     this.sendFormerUser();
-    this.sendUsers();
   }
 }
 
