@@ -22,7 +22,7 @@ Emit a `users` event on the server with an array of currently connected users pa
 Each time a user connect (or disconnect) himself two emits happen:
 
 Emit a `users` event on the server with the new array of currently connected users payloads, as it does on getUsers event receiption.
-Emit a `user-connection` or `user-disconnection` event on the server with a payload of the user that just connected or disconnected himself, example:
+Emit a `userConnection` or `userDisconnection` event on the server with a payload of the user that just connected or disconnected himself, example:
 
 ```
   { id: '1fe4792f-4141-44da-9bd7-bef4cfbd4916', name: 'Anonymous' }
