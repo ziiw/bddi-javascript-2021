@@ -15,8 +15,8 @@ class Connection {
     this.id = uuidv4();
     this.name = "Anonymous";
 
-    usersSockets.set(socket, {id:this.id, name:this.name});
-    
+    usersSockets.set(socket, { id: this.id, name: this.name });
+
     // On connection, send a user-connection event containing user info
     this.sendNewUser(this.id, this.name);
 
@@ -38,17 +38,17 @@ class Connection {
 
   // Used on new client connection
   sendNewUser(id, name) {
-    this.io.sockets.emit("userConnection", {id, name});
+    this.io.sockets.emit("userConnection", { id, name });
   }
 
   // Used on new client disconnection
   sendFormerUser() {
-    this.io.sockets.emit("userDisconnection", {id: this.id, name: this.name});
+    this.io.sockets.emit("userDisconnection", { id: this.id, name: this.name });
   }
 
   setUsername(name) {
-    const user = userSockets.get(this.socket)
-    const newUser = { ...user, name }
+    const user = usersSockets.get(this.socket);
+    const newUser = { ...user, name };
     usersSockets.set(this.socket, newUser);
     this.io.sockets.emit("updateUsername", newUser);
   }
