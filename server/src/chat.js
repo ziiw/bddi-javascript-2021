@@ -1,7 +1,7 @@
 const uuidv4 = require("uuid").v4;
 
 const messages = new Set();
-const users = new Map();
+const usersSockets = new Map();
 
 const defaultUser = {
   id: uuidv4(),
@@ -12,10 +12,15 @@ class Connection {
   constructor(io, socket) {
     this.socket = socket;
     this.io = io;
+    this.id = uuidv4();
+    this.name = "Anonymous";
 
-    users.set(socket, defaultUser);
+    usersSockets.set(socket, {id:this.id, name:this.name});
+    
+    // On connection, send a user-connection event containing user info
+    this.sendNewUser(this.id, this.name);
 
-    socket.on("getUsers", () => this.getUsers());
+    socket.on("getUsers", () => this.sendUsers());
     socket.on("setUsername", (name) => this.setUsername(name));
     socket.on("getMessages", () => this.getMessages());
     socket.on("message", (value) => this.handleMessage(value));
@@ -25,16 +30,27 @@ class Connection {
     });
   }
 
-  getUsers() {
-    users.forEach((user) => this.sendUser(user));
+  sendUsers() {
+    const users = [];
+    usersSockets.forEach((value) => users.push(value));
+    this.socket.emit("users", users);
   }
 
-  sendUser(user) {
-    this.io.sockets.emit("user", user);
+  // Used on new client connection
+  sendNewUser(id, name) {
+    this.io.sockets.emit("userConnection", {id, name});
+  }
+
+  // Used on new client disconnection
+  sendFormerUser() {
+    this.io.sockets.emit("userDisconnection", {id: this.id, name: this.name});
   }
 
   setUsername(name) {
-    users.set(this.socket, { name });
+    const user = userSockets.get(this.socket)
+    const newUser = { ...user, name }
+    usersSockets.set(this.socket, newUser);
+    this.io.sockets.emit("updateUsername", newUser);
   }
 
   sendMessage(message) {
@@ -48,7 +64,7 @@ class Connection {
   handleMessage(value) {
     const message = {
       id: uuidv4(),
-      user: users.get(this.socket) || defaultUser,
+      user: usersSockets.get(this.socket) || defaultUser,
       value,
       time: Date.now(),
     };
@@ -58,7 +74,8 @@ class Connection {
   }
 
   disconnect() {
-    users.delete(this.socket);
+    usersSockets.delete(this.socket);
+    this.sendFormerUser();
   }
 }
 
