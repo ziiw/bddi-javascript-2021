@@ -32,18 +32,6 @@ Emit a `userConnection` or `userDisconnection` event on the server with a payloa
 
 Need a `string` representing the username
 
-### getMessages
-
-Emit a `message` event with a message payload
-
-```
-{
-  id: "1fe4792f-4141-44da-9bd7-bef4cfbd4916",
-  user: {id: "12efb-657-123-2k123-bef4cfbd4916", name: ""},
-  value: "message content",
-  time: timestamp,
-};
-```
 
 ### getMessages
 Emit a `messages` event with the array of full messages
