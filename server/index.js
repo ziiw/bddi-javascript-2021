@@ -16,4 +16,4 @@ const io = new Server(httpServer, {
 chat(io);
 
 // Start the server
-httpServer.listen(3000);
+httpServer.listen(process.env.PORT || 3000);
