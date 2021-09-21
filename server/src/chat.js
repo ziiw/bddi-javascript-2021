@@ -47,7 +47,10 @@ class Connection {
   }
 
   setUsername(name) {
-    usersSockets.set(this.socket, { name });
+    const user = userSockets.get(this.socket)
+    const newUser = { ...user, name }
+    usersSockets.set(this.socket, newUser);
+    this.io.sockets.emit("updateUsername", newUser);
   }
 
   sendMessage(message) {
