@@ -38,12 +38,12 @@ class Connection {
 
   // Used on new client connection
   sendNewUser(id, name) {
-    this.io.sockets.emit("user-connection", {id, name});
+    this.io.sockets.emit("userConnection", {id, name});
   }
 
   // Used on new client disconnection
   sendFormerUser() {
-    this.io.sockets.emit("user-disconnection", {id: this.id, name: this.name});
+    this.io.sockets.emit("userDisconnection", {id: this.id, name: this.name});
   }
 
   setUsername(name) {
