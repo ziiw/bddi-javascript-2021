@@ -45,6 +45,16 @@ Emit a `message` event with a message payload
 };
 ```
 
-### message
+### getMessages
+Emit a `messages` event with the array of full messages
+```
+{
+  id: "sdfsdfsdfdsf",
+  user: {id: "sdfdsf", name: "toto"},
+  value: "message",
+  time: 123123123,
+};
+```
 
+### message
 Event sent to receive a new message
