@@ -4,7 +4,7 @@ BDDI JavaScript 2021 - Workshop material
 
 ## Chat WebSocket Events
 
-### getUsers
+### EMIT getUsers
 
 Emit a `users` event on the server with an array of currently connected users payloads, example:
 
@@ -28,13 +28,22 @@ Emit a `userConnection` or `userDisconnection` event on the server with a payloa
   { id: '1fe4792f-4141-44da-9bd7-bef4cfbd4916', name: 'Anonymous' }
 ```
 
-### setUsername
+### EMIT setUsername
 
 Need a `string` representing the username
 
+### ON updateUsername
 
-### getMessages
+Receive the user that had just updated his username
+
+```
+  { id: '1fe4792f-4141-44da-9bd7-bef4cfbd4916', name: 'new username' }
+```
+
+### EMIT getMessages
+
 Emit a `messages` event with the array of full messages
+
 ```
 {
   id: "sdfsdfsdfdsf",
@@ -44,5 +53,10 @@ Emit a `messages` event with the array of full messages
 };
 ```
 
-### message
+### ON messages
+
+Event sent to receive the whole message history
+
+### ON message
+
 Event sent to receive a new message
