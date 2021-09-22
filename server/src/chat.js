@@ -58,7 +58,9 @@ class Connection {
   }
 
   getMessages() {
-    messages.forEach((message) => this.sendMessage(message));
+    const msgs = [];
+    messages.forEach((message) => msgs.push(message));
+    this.socket.emit("messages", msgs);
   }
 
   handleMessage(value) {
