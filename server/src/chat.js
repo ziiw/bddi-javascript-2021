@@ -12,7 +12,7 @@ class Connection {
   constructor(io, socket) {
     this.socket = socket;
     this.io = io;
-    this.id = uuidv4();
+    this.id = socket.id;
     this.name = "Anonymous";
 
     usersSockets.set(socket, { id: this.id, name: this.name });
