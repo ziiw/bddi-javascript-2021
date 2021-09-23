@@ -8,12 +8,32 @@ const defaultUser = {
   name: "Anonymous",
 };
 
+const AVATAR_TYPES = {
+  IMAGE_URL: "imageURL",
+  VIDEO_URL: "videoURL",
+  JSON: "json",
+  COLOR: "color",
+  NO_AVATAR: "noAvatar",
+};
+
+const MESSAGE_TYPES = {
+  IMAGE: "image",
+  AUDIO: "audio",
+  VIDEO: "video",
+  TEXT: "text",
+};
+
 class Connection {
   constructor(io, socket) {
     this.socket = socket;
     this.io = io;
     this.id = socket.id;
     this.name = "Anonymous";
+    this.role = "";
+    this.avatar = {
+      type: AVATAR_TYPES.NO_AVATAR,
+      value: undefined,
+    };
 
     usersSockets.set(socket, { id: this.id, name: this.name });
 
@@ -22,12 +42,32 @@ class Connection {
 
     socket.on("getUsers", () => this.sendUsers());
     socket.on("setUsername", (name) => this.setUsername(name));
+
     socket.on("getMessages", () => this.getMessages());
     socket.on("message", (value) => this.handleMessage(value));
+
+    socket.on("setAvatar", (avatar) => this.setAvatar(avatar));
+
+    socket.on("setRole", (role) => this.setRole(role));
+
     socket.on("disconnect", () => this.disconnect());
     socket.on("connect_error", (err) => {
       console.log(`connect_error due to ${err.message}`);
     });
+  }
+
+  setAvatar(avatar) {
+    const user = usersSockets.get(this.socket);
+    user.avatar = avatar;
+    usersSockets.set(this.socket, user);
+    this.io.sockets.emit("updateAvatar", user);
+  }
+
+  setRole(role) {
+    const user = usersSockets.get(this.socket);
+    user.role = role;
+    usersSockets.set(this.socket, user);
+    this.io.sockets.emit("updateRole", user);
   }
 
   sendUsers() {
@@ -63,12 +103,22 @@ class Connection {
     this.socket.emit("messages", msgs);
   }
 
-  handleMessage(value) {
+  /**
+   *
+   * @param {} message
+   * @example {type: MESSAGES_TYPE, value: "mon message"}
+   */
+  handleMessage(clientMsg) {
+    let type = null;
+    if (typeof clientMsg === "object") {
+      type = clientMsg.type;
+    }
     const message = {
       id: uuidv4(),
       user: usersSockets.get(this.socket) || defaultUser,
-      value,
+      value: type === null ? clientMsg : clientMsg.value,
       time: Date.now(),
+      type,
     };
 
     messages.add(message);
