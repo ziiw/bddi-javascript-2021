@@ -21,6 +21,7 @@ const MESSAGE_TYPES = {
   AUDIO: "audio",
   VIDEO: "video",
   TEXT: "text",
+  BOT: "bot",
 };
 
 class Connection {
@@ -106,16 +107,21 @@ class Connection {
   /**
    *
    * @param {} message
-   * @example {type: MESSAGES_TYPE, value: "mon message"}
+   * @example {type: MESSAGES_TYPE, value: "mon message", user: "Mon custom name"}
    */
   handleMessage(clientMsg) {
     let type = null;
+    let customUser;
     if (typeof clientMsg === "object") {
       type = clientMsg.type;
+
+      if (type === MESSAGE_TYPES.BOT) {
+        customUser = clientMsg.user;
+      }
     }
     const message = {
       id: uuidv4(),
-      user: usersSockets.get(this.socket) || defaultUser,
+      user: customUser || usersSockets.get(this.socket) || defaultUser,
       value: type === null ? clientMsg : clientMsg.value,
       time: Date.now(),
       type,
