@@ -5,9 +5,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 // Added code
-import { io } from "socket.io-client";
-// const socket = io("https://server-domain.com"); // server on different server
-const socket = io("localhost:3000"); // Server on same computer
+// import { io } from "socket.io-client";
+// const socket = io("/"); // server on different server
+// // const socket = io("localhost:3000"); // Server on same computer
 
 ReactDOM.render(
   <React.StrictMode>

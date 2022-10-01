@@ -11,7 +11,7 @@ function App() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io(`http://${window.location.hostname}:3000`);
+    const newSocket = io(`/`);
     setSocket(newSocket);
     return () => newSocket.close();
   }, [setSocket]);
