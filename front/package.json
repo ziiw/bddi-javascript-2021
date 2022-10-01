@@ -36,5 +36,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://ziiw-bddi-javascript-2021-95vwr55p55fwwg-3000.githubpreview.dev"
+  "proxy": "http://localhost:3000"
 }
