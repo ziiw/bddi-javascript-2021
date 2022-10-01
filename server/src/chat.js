@@ -33,7 +33,7 @@ class Connection {
     this.role = "";
     this.avatar = {
       type: AVATAR_TYPES.NO_AVATAR,
-      value: undefined,
+      value: null,
     };
 
     usersSockets.set(socket, { id: this.id, name: this.name });
