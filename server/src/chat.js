@@ -41,6 +41,8 @@ class Connection {
     // On connection, send a user-connection event containing user info
     this.sendNewUser(this.id, this.name);
 
+    socket.on("privateMessage", this.handlePrivateMessage);
+
     socket.on("getUsers", () => this.sendUsers());
     socket.on("setUsername", (name) => this.setUsername(name));
 
@@ -55,6 +57,12 @@ class Connection {
     socket.on("connect_error", (err) => {
       console.log(`connect_error due to ${err.message}`);
     });
+  }
+
+  handlePrivateMessage(receiverSocketId, message) {
+    this.socket
+      .to(receiverSocketId)
+      .emit("privateMessage", this.socket.id, message);
   }
 
   setAvatar(avatar) {
