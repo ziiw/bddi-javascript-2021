@@ -1,5 +1,6 @@
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const { instrument } = require("@socket.io/admin-ui");
 // Import our main class
 const chat = require("./src/chat");
 
@@ -10,6 +11,10 @@ const io = new Server(httpServer, {
     origin: "*",
     methods: ["GET", "POST"],
   },
+});
+
+instrument(io, {
+  auth: false,
 });
 
 // Listen for new websocket connections
