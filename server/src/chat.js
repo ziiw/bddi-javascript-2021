@@ -1,6 +1,7 @@
 const uuidv4 = require("uuid").v4;
 
 const messages = new Set();
+const rooms = new Set();
 const usersSockets = new Map();
 
 const defaultRoom = "general";
@@ -46,6 +47,9 @@ class Connection {
     this.socket.join(defaultRoom);
 
     socket.on("joinRoom", this.handleJoinRoom);
+    socket.on("leaveRoom", this.handleLeaveRoom);
+    socket.on("getRooms", this.getRooms);
+
     socket.on("privateMessage", this.handlePrivateMessage);
 
     socket.on("getUsers", () => this.sendUsers());
@@ -64,8 +68,17 @@ class Connection {
     });
   }
 
+  getRooms() {
+    this.socket.emit("getRooms", rooms);
+  }
+
+  handleLeaveRoom(roomName) {
+    this.socket.leave(roomName);
+  }
+
   handleJoinRoom(roomName) {
     this.socket.join(roomName);
+    rooms.add(roomName);
   }
 
   handlePrivateMessage(receiverSocketId, message) {
