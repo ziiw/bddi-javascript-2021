@@ -1,7 +1,7 @@
 const uuidv4 = require("uuid").v4;
 
 const messages = new Set();
-const rooms = new Set();
+const rooms = [];
 const usersSockets = new Map();
 
 const defaultRoom = "general";
@@ -78,7 +78,7 @@ class Connection {
 
   handleJoinRoom(roomName) {
     this.socket.join(roomName);
-    rooms.add(roomName);
+    rooms.push(roomName);
   }
 
   handlePrivateMessage(receiverSocketId, message) {
@@ -128,7 +128,7 @@ class Connection {
     if (room) {
       this.io.to(room).emit("message", message);
     } else {
-      this.io.to("general").emit("message", message);
+      this.io.to(defaultRoom).emit("message", message);
     }
   }
 
