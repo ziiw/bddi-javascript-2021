@@ -46,11 +46,11 @@ class Connection {
 
     this.socket.join(defaultRoom);
 
-    socket.on("joinRoom", this.handleJoinRoom);
-    socket.on("leaveRoom", this.handleLeaveRoom);
-    socket.on("getRooms", this.getRooms);
+    socket.on("joinRoom", this.handleJoinRoom.bind(this));
+    socket.on("leaveRoom", this.handleLeaveRoom.bind(this));
+    socket.on("getRooms", this.getRooms.bind(this));
 
-    socket.on("privateMessage", this.handlePrivateMessage);
+    socket.on("privateMessage", this.handlePrivateMessage.bind(this));
 
     socket.on("getUsers", () => this.sendUsers());
     socket.on("setUsername", (name) => this.setUsername(name));
