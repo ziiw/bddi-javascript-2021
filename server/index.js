@@ -13,6 +13,7 @@ const io = new Server(httpServer, {
       "http://localhost:3000",
       "http://localhost:3001",
       "http://localhost:1234",
+      "https://blockchat-space.netlify.app",
     ],
     credentials: true,
   },
