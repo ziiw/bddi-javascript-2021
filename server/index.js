@@ -19,6 +19,7 @@ const io = new Server(httpServer, {
       "https://meepo-chat.surge.sh",
       "https://xgob23aa.herokuapp.com",
       "https://giga-chat-box.netlify.app",
+      "https://galaxy-chat.vercel.app",
     ],
     credentials: true,
   },
