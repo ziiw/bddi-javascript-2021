@@ -16,13 +16,18 @@ const io = new Server(httpServer, {
       "https://blockchat-space.netlify.app",
       "http://127.0.0.1:5500",
       "https://meepo-chat.surge.sh",
+      "https://xgob23aa.herokuapp.com"
     ],
     credentials: true,
   },
 });
 
 instrument(io, {
-  auth: false,
+  auth: {
+    type: "basic",
+    username: "admin",
+    password: "gobelins2022" // "changeit" encrypted with bcrypt
+  },,
 });
 
 // Listen for new websocket connections
