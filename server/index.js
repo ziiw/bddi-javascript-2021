@@ -12,8 +12,8 @@ const io = new Server(httpServer, {
       "https://admin.socket.io",
       "http://localhost:3000",
       "http://localhost:3001",
+      "http://localhost:1234",
     ],
-    methods: ["GET", "POST"],
     credentials: true,
   },
 });
