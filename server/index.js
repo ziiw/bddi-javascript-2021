@@ -8,8 +8,13 @@ const chat = require("./src/chat");
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: [
+      "https://admin.socket.io",
+      "http://localhost:3000",
+      "http://localhost:3001",
+    ],
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
