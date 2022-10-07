@@ -20,6 +20,8 @@ const io = new Server(httpServer, {
       "https://xgob23aa.herokuapp.com",
       "https://giga-chat-box.netlify.app",
       "https://galaxy-chat.vercel.app",
+      "http://localhost:8000",
+      "https://hawkins.surge.sh",
     ],
     credentials: true,
   },
@@ -29,7 +31,7 @@ instrument(io, {
   auth: {
     type: "basic",
     username: "admin",
-    password: "gobelins2022", // "changeit" encrypted with bcrypt
+    password: "$2b$10$1Zel63pfSJ5XXpL2es/iPuSeeKuaQMW1xjAQjJeWTbMaHX/LB7b7S", // "changeit" encrypted with bcrypt
   },
 });
 
